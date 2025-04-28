@@ -2,28 +2,28 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend-deploy
-sepc:
+spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       app: myportfolio-frontend
-    template:
-      metadata:
-        labels:
-          app: myportfolio-frontend
-        spec:
-          initContainers:
-            - name: wait-for-mongodb
-              image: busybox
-              command: 
-                - "sh"
-                - "-c"
-                - "until nc -z -v -w30 mongodb-service 27017; do echo 'Waiting for mongodb...'; sleep 5; done;"
-          containers:
-            - name: myportfolio-frontend
-              image: dangdang42/myportfolio-frontend:latest
-              ports:
-                - contianerPort: 3000
+  template:
+    metadata:
+      labels:
+        app: myportfolio-frontend
+      spec:
+        initContainers:
+          - name: wait-for-mongodb
+            image: busybox
+            command: 
+              - "sh"
+              - "-c"
+              - "until nc -z -v -w30 mongodb-service 27017; do echo 'Waiting for mongodb...'; sleep 5; done;"
+        containers:
+          - name: myportfolio-frontend
+            image: hello/myportfolio-frontend:latest
+            ports:
+              - containerPort: 3000
 
 ---
 apiVersion: apps/v1
@@ -35,64 +35,64 @@ sepc:
   selector:
     matchLabels:
       app: myportfolio-fastapi
-    template:
-      metadata:
-        labels:
-          app: myportfolio-fastapi
-        spec:
-          initContainers:
-            - name: wait-for-mongodb
-              image: busybox
-              command: 
-                - "sh"
-                - "-c"
-                - "until nc -z -v -w30 mongodb-service 27017; do echo 'Waiting for mongodb...'; sleep 5; done;"
-          containers:
-            - name: myportfolio-fastapi
-              image: dangdang42/myportfolio-fastapi:latest
-              ports:
-                - contianerPort: 8000
-              env:
-                - name: MONGO_USER
-                  valueFrom:
-                    secretKeyRef:
-                      name: {{ .Values.secret.mongodb.name }}
-                      key: MONGO_USER
-                - name: MONGO_PASS
-                  valueFrom:
-                    secretKeyRef:
-                      name: {{ .Values.secret.mongodb.name }}
-                      key: MONGO_PASS
-                - name: MONGO_HOST
-                  valueFrom:
-                    secretKeyRef:
-                      name: {{ .Values.secret.mongodb.name }}
-                      key: MONGO_HOST
-                - name: MONGO_PORT
-                  valueFrom:
-                    secretKeyRef:
-                      name: {{ .Values.secret.mongodb.name }}
-                      key: MONGO_PORT
-                - name: MONGO_DB_NAME
-                  valueFrom:
-                    secretKeyRef:
-                      name: {{ .Values.secret.mongodb.name }}
-                      key: MONGO_DB_NAME
-                - name: MONGO_COLLECTION_NAME
-                  valueFrom:
-                    secretKeyRef:
-                      name: {{ .Values.secret.mongodb.name }}
-                      key: MONGO_COLLECTION_FASTAPI
-                - name: REACT_APP_HOST
-                  valueFrom:
-                    secretKeyRef:
-                      name: {{ .Values.secret.mongodb.name }}
-                      key: REACT_APP_HOST
-                - name: REACT_APP_PORT
-                  valueFrom:
-                    secretKeyRef:
-                      name: {{ .Values.secret.mongodb.name }}
-                      key: REACT_APP_PORT
+  template:
+    metadata:
+      labels:
+        app: myportfolio-fastapi
+      spec:
+        initContainers:
+          - name: wait-for-mongodb
+            image: busybox
+            command: 
+              - "sh"
+              - "-c"
+              - "until nc -z -v -w30 mongodb-service 27017; do echo 'Waiting for mongodb...'; sleep 5; done;"
+        containers:
+          - name: myportfolio-fastapi
+            image: dangdang42/myportfolio-fastapi:latest
+            ports:
+              - containerPort: 8000
+            env:
+              - name: MONGO_USER
+                valueFrom:
+                  secretKeyRef:
+                    name: {{ .Values.secret.mongodb.name }}
+                    key: MONGO_USER
+              - name: MONGO_PASS
+                valueFrom:
+                  secretKeyRef:
+                    name: {{ .Values.secret.mongodb.name }}
+                    key: MONGO_PASS
+              - name: MONGO_HOST
+                valueFrom:
+                  secretKeyRef:
+                    name: {{ .Values.secret.mongodb.name }}
+                    key: MONGO_HOST
+              - name: MONGO_PORT
+                valueFrom:
+                  secretKeyRef:
+                    name: {{ .Values.secret.mongodb.name }}
+                    key: MONGO_PORT
+              - name: MONGO_DB_NAME
+                valueFrom:
+                  secretKeyRef:
+                    name: {{ .Values.secret.mongodb.name }}
+                    key: MONGO_DB_NAME
+              - name: MONGO_COLLECTION_NAME
+                valueFrom:
+                  secretKeyRef:
+                    name: {{ .Values.secret.mongodb.name }}
+                    key: MONGO_COLLECTION_FASTAPI
+              - name: REACT_APP_HOST
+                valueFrom:
+                  secretKeyRef:
+                    name: {{ .Values.secret.mongodb.name }}
+                    key: REACT_APP_HOST
+              - name: REACT_APP_PORT
+                valueFrom:
+                  secretKeyRef:
+                    name: {{ .Values.secret.mongodb.name }}
+                    key: REACT_APP_PORT
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -103,62 +103,62 @@ sepc:
   selector:
     matchLabels:
       app: myportfolio-chatbot
-    template:
-      metadata:
-        labels:
-          app: myportfolio-chatbot
-        spec:
-          initContainers:
-            - name: wait-for-mongodb
-              image: busybox
-              command: 
-                - "sh"
-                - "-c"
-                - "until nc -z -v -w30 mongodb-service 27017; do echo 'Waiting for mongodb...'; sleep 5; done;"
-          containers:
-            - name: myportfolio-chatbot
-              image: dangdang42/myportfolio-backend-chatbot:latest
-              ports:
-                - contianerPort: 8000
-              env:
-                - name: MONGO_USER
-                  valueFrom:
-                    secretKeyRef:
-                      name: {{ .Values.secret.mongodb.name }}
-                      key: MONGO_USER
-                - name: MONGO_PASS
-                  valueFrom:
-                    secretKeyRef:
-                      name: {{ .Values.secret.mongodb.name }}
-                      key: MONGO_PASS
-                - name: MONGO_HOST
-                  valueFrom:
-                    secretKeyRef:
-                      name: {{ .Values.secret.mongodb.name }}
-                      key: MONGO_HOST
-                - name: MONGO_PORT
-                  valueFrom:
-                    secretKeyRef:
-                      name: {{ .Values.secret.mongodb.name }}
-                      key: MONGO_PORT
-                - name: MONGO_DB_NAME
-                  valueFrom:
-                    secretKeyRef:
-                      name: {{ .Values.secret.mongodb.name }}
-                      key: MONGO_DB_NAME
-                - name: MONGO_COLLECTION_NAME
-                  valueFrom:
-                    secretKeyRef:
-                      name: {{ .Values.secret.mongodb.name }}
-                      key: MONGO_COLLECTION_CHATBOT
-                - name: REACT_APP_HOST
-                  valueFrom:
-                    secretKeyRef:
-                      name: {{ .Values.secret.mongodb.name }}
-                      key: REACT_APP_HOST
-                - name: REACT_APP_PORT
-                  valueFrom:
-                    secretKeyRef:
-                      name: {{ .Values.secret.mongodb.name }}
-                      key: REACT_APP_PORT                  
+  template:
+    metadata:
+      labels:
+        app: myportfolio-chatbot
+      spec:
+        initContainers:
+          - name: wait-for-mongodb
+            image: busybox
+            command: 
+              - "sh"
+              - "-c"
+              - "until nc -z -v -w30 mongodb-service 27017; do echo 'Waiting for mongodb...'; sleep 5; done;"
+        containers:
+          - name: myportfolio-chatbot
+            image: dangdang42/myportfolio-backend-chatbot:latest
+            ports:
+              - containerPort: 8001
+            env:
+              - name: MONGO_USER
+                valueFrom:
+                  secretKeyRef:
+                    name: {{ .Values.secret.mongodb.name }}
+                    key: MONGO_USER
+              - name: MONGO_PASS
+                valueFrom:
+                  secretKeyRef:
+                    name: {{ .Values.secret.mongodb.name }}
+                    key: MONGO_PASS
+              - name: MONGO_HOST
+                valueFrom:
+                  secretKeyRef:
+                    name: {{ .Values.secret.mongodb.name }}
+                    key: MONGO_HOST
+              - name: MONGO_PORT
+                valueFrom:
+                  secretKeyRef:
+                    name: {{ .Values.secret.mongodb.name }}
+                    key: MONGO_PORT
+              - name: MONGO_DB_NAME
+                valueFrom:
+                  secretKeyRef:
+                    name: {{ .Values.secret.mongodb.name }}
+                    key: MONGO_DB_NAME
+              - name: MONGO_COLLECTION_NAME
+                valueFrom:
+                  secretKeyRef:
+                    name: {{ .Values.secret.mongodb.name }}
+                    key: MONGO_COLLECTION_CHATBOT
+              - name: REACT_APP_HOST
+                valueFrom:
+                  secretKeyRef:
+                    name: {{ .Values.secret.mongodb.name }}
+                    key: REACT_APP_HOST
+              - name: REACT_APP_PORT
+                valueFrom:
+                  secretKeyRef:
+                    name: {{ .Values.secret.mongodb.name }}
+                    key: REACT_APP_PORT                  
               
