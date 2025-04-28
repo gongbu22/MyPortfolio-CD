@@ -1,4 +1,8 @@
 replicaCount: 1
 
+secret:
+  mongodb:
+    name: my-mongodb-secret
+
 mongodb:
   port: 27017
