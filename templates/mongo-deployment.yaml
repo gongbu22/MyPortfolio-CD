@@ -20,7 +20,7 @@ spec:
               protocol: TCP
           envFrom:
             - secretRef:
-                name: mongodb-secret
+                name: my-mongodb-secret
           env:
             - name: TZ
               value: Asia/Seoul
