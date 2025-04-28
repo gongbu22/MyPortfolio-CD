@@ -21,7 +21,7 @@ spec:
               - "until nc -z -v -w30 mongodb-service 27017; do echo 'Waiting for mongodb...'; sleep 5; done;"
         containers:
           - name: myportfolio-frontend
-            image: hello/myportfolio-frontend:latest
+            image: dangdang42/myportfolio-frontend:latest
             ports:
               - containerPort: 3000
 
