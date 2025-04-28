@@ -1,4 +1,4 @@
-apiVersion: app/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend-deploy
@@ -26,7 +26,7 @@ sepc:
                 - contianerPort: 3000
 
 ---
-apiVersion: app/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: fastapi-deploy
@@ -94,7 +94,7 @@ sepc:
                       name: {{ .Values.secret.mongodb.name }}
                       key: REACT_APP_PORT
 ---
-apiVersion: app/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: chatbot-deploy
