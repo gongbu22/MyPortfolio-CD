@@ -1,0 +1,55 @@
+apiVersion: app/v1
+kind: Deployment
+metadata:
+  name: frontend-deploy
+sepc:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: myportfolio-frontend
+    template:
+      metadata:
+        labels:
+          app: myportfolio-frontend
+        spec:
+          initContainers:
+            - name: wait-for-mongodb
+              image: busybox
+              command: 
+                - "sh"
+                - "-c"
+                - "until nc -z -v -w30 mongodb-service 27017; do echo 'Waiting for mongodb...'; sleep 5; done;"
+          containers:
+            - name: myportfolio-frontend
+              image: dangdang42/myportfolio-frontend:latest
+              ports:
+                - contianerPort: 3000
+
+---
+apiVersion: app/v1
+kind: Deployment
+metadata:
+  name: fastapi-deploy
+sepc:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: myportfolio-fastapi
+    template:
+      metadata:
+        labels:
+          app: myportfolio-fastapi
+        spec:
+          initContainers:
+            - name: wait-for-mongodb
+              image: busybox
+              command: 
+                - "sh"
+                - "-c"
+                - "until nc -z -v -w30 mongodb-service 27017; do echo 'Waiting for mongodb...'; sleep 5; done;"
+          containers:
+            - name: myportfolio-fastapi
+              image: dangdang42/myportfolio-fastapi:latest
+              ports:
+                - contianerPort: 3000
+              
