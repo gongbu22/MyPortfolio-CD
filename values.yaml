@@ -6,3 +6,4 @@ secret:
 
 mongodb:
   port: 27017
+  nodePort: 30017
