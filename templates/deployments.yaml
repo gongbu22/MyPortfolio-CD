@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend-deploy
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
@@ -30,6 +32,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: fastapi-deploy
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
@@ -99,6 +103,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: chatbot-deploy
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
