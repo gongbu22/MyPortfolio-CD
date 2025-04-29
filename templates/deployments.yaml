@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: frontend-deploy
   annotations:
-    argocd.argoproj.io/sync-wave: "2"
+    argocd.argoproj.io/sync-wave: "3"
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
@@ -104,7 +104,7 @@ kind: Deployment
 metadata:
   name: chatbot-deploy
   annotations:
-    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
