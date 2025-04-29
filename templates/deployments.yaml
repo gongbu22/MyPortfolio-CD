@@ -123,7 +123,7 @@ spec:
             - "-c"
             - "until nc -z -v -w30 mongodb-service 27017; do echo 'Waiting for mongodb...'; sleep 5; done;"
       containers:
-        - name: myportfolio-chatbot
+        - name: myportfolio-backend-chatbot
           image: dangdang42/myportfolio-backend-chatbot:latest
           ports:
             - containerPort: 8001
