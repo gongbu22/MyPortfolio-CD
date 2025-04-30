@@ -23,7 +23,7 @@ spec:
             - "until nc -z -v -w30 mongodb-service 27017; do echo 'Waiting for mongodb...'; sleep 5; done;"
       containers:
         - name: myportfolio-frontend
-          image: dangdang42/myportfolio-frontend:latest
+          image: {{ .Values.imgs.FRONTEND_IMG }}
           ports:
             - containerPort: 3000
 ---
@@ -53,7 +53,7 @@ spec:
             - "until nc -z -v -w30 mongodb-service 27017; do echo 'Waiting for mongodb...'; sleep 5; done;"
       containers:
         - name: myportfolio-fastapi
-          image: dangdang42/myportfolio-fastapi:latest
+          image: {{ .Values.imgs.FASTAPI_IMG }}
           ports:
             - containerPort: 8000
           env:
@@ -124,7 +124,7 @@ spec:
             - "until nc -z -v -w30 mongodb-service 27017; do echo 'Waiting for mongodb...'; sleep 5; done;"
       containers:
         - name: myportfolio-backend-chatbot
-          image: dangdang42/myportfolio-backend-chatbot:latest
+          image: {{ .Values.imgs.CHATBOT_IMG }}
           ports:
             - containerPort: 8001
           env:
