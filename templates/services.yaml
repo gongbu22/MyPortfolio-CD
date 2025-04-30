@@ -5,7 +5,7 @@ metadata:
 spec:
   type: NodePort
   selector:
-    app: frontend-deploy
+    app: myportfolio-frontend
   ports:
     - protocol: TCP
       port: 80
@@ -18,7 +18,7 @@ metadata:
   name: fastapi-service
 spec:
   selector:
-    app: fastapi-deploy
+    app: myportfolio-fastapi
   ports:
     - protocol: TCP
       port: 80
@@ -30,7 +30,7 @@ metadata:
   name: chatbot-service
 spec:
   selector:
-    app: chatbot-deploy
+    app: myportfolio-chatbot
   ports:
     - protocol: TCP
       port: 80
