@@ -37,6 +37,8 @@ spec:
           volumeMounts:
             - mountPath: /data/db
               name: mongo-data
+          args:
+            - "--auth"
       volumes:
         - name: mongo-data
           persistentVolumeClaim:
