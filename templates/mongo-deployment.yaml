@@ -20,19 +20,19 @@ spec:
               protocol: TCP
           envFrom:
             - secretRef:
-                name: my-mongodb-secret
+                name: {{ .Values.secret.mongodb.name }}
           env:
             - name: TZ
               value: Asia/Seoul
             - name: MONGO_INITDB_ROOT_USERNAME
               valueForm:
                 secretKeyRef:
-                  name: my-mongodb-secret
+                  name: {{ .Values.secret.mongodb.name }}
                   key: MONGO_USER
             - name: MONGO_INITDB_ROOT_PASSWORD
               valueForm:
                 secretKeyRef:
-                  name: my-mongodb-secret
+                  name: {{ .Values.secret.mongodb.name }}
                   key: MONGO_PASS
           volumeMounts:
             - mountPath: /data/db
