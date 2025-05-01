@@ -3,6 +3,8 @@ replicaCount: 1
 secret:
   mongodb:
     name: my-mongodb-secret
+  react:
+    name: my-react-secret
 
 mongodb:
   port: 27017
