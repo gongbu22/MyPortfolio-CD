@@ -24,6 +24,16 @@ spec:
           env:
             - name: TZ
               value: Asia/Seoul
+            - name: MONGO_INITDB_ROOT_USERNAME
+              valueForm:
+                secretKeyRef:
+                  name: my-mongodb-secret
+                  key: MONGO_USER
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              valueForm:
+                secretKeyRef:
+                  name: my-mongodb-secret
+                  key: MONGO_PASS
           volumeMounts:
             - mountPath: /data/db
               name: mongo-data
