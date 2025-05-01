@@ -25,12 +25,12 @@ spec:
             - name: TZ
               value: Asia/Seoul
             - name: MONGO_INITDB_ROOT_USERNAME
-              valueForm:
+              valueFrom:
                 secretKeyRef:
                   name: {{ .Values.secret.mongodb.name }}
                   key: MONGO_USER
             - name: MONGO_INITDB_ROOT_PASSWORD
-              valueForm:
+              valueFrom:
                 secretKeyRef:
                   name: {{ .Values.secret.mongodb.name }}
                   key: MONGO_PASS
