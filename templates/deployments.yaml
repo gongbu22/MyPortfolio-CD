@@ -27,16 +27,16 @@ spec:
           ports:
             - containerPort: 5173
           env:
-            - name: REACT_APP_FASTAPI_URL
+            - name: VITE_FASTAPI_URL
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.secret.react.name }}
-                  key: REACT_APP_FASTAPI_URL
-            - name: REACT_APP_CHATBOT_URL
+                  key: VITE_FASTAPI_URL
+            - name: VITE_CHATBOT_URL
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.secret.react.name }}
-                  key: REACT_APP_CHATBOT_URL
+                  key: VITE_CHATBOT_URL
         - name: myportfolio-nginx
           image: {{ .Values.imgs.NGINX_IMG}}
           ports:
