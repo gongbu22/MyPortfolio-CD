@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend-deploy
+  name: nodejs-deploy
   annotations:
     argocd.argoproj.io/sync-wave: "3"
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: myportfolio-frontend
+      app: myportfolio-nodejs
   template:
     metadata:
       labels:
-        app: myportfolio-frontend
+        app: myportfolio-nodejs
     spec:
       initContainers:
         - name: wait-for-mongodb
@@ -37,16 +37,36 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.secret.react.name }}
                   key: VITE_CHATBOT_URL
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deploy
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: myportfolio-nginx
+  template:
+    metadata:
+      labels:
+        app: myportfolio-nginx
+    spec:
+      initContainers:
+        - name: wait-for-mongodb
+          image: busybox
+          command: 
+            - "sh"
+            - "-c"
+            - "until nc -z -v -w30 mongodb-service 27017; do echo 'Waiting for mongodb...'; sleep 5; done;"
+      containers:
         - name: myportfolio-nginx
           image: {{ .Values.imgs.NGINX_IMG}}
           ports:
             - containerPort: 80
-          volumeMounts:
-            - name: static-files
-              mountPath: /usr/share/nginx/html
-      volumes:
-          - name: static-files
-            emptyDir: {}
+        
 ---
 
 apiVersion: apps/v1
