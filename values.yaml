@@ -11,6 +11,8 @@ mongodb:
   nodePort: 30017
 
 imgs:
-  FRONTEND_IMG: dangdang42/myportfolio-frontend:latest
+  NODEJS_IMG: dangdang42/myportfolio-nodejs:latest
+  NGINX_IMG: dangdang42/myportfolio-nginx:latest
+  # FRONTEND_IMG: dangdang42/myportfolio-frontend:latest
   FASTAPI_IMG:  dangdang42/myportfolio-fastapi:latest
   CHATBOT_IMG: dangdang42/myportfolio-backend-chatbot:latest

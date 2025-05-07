@@ -22,10 +22,10 @@ spec:
             - "-c"
             - "until nc -z -v -w30 mongodb-service 27017; do echo 'Waiting for mongodb...'; sleep 5; done;"
       containers:
-        - name: myportfolio-frontend
-          image: {{ .Values.imgs.FRONTEND_IMG }}
+        - name: myportfolio-nodejs
+          image: {{ .Values.imgs.NODEJS_IMG}}
           ports:
-            - containerPort: 80
+            - containerPort: 5173
           env:
             - name: REACT_APP_FASTAPI_URL
               valueFrom:
@@ -37,6 +37,16 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.secret.react.name }}
                   key: REACT_APP_CHATBOT_URL
+        - name: myportfolio-nginx
+          image: {{ .Values.imgs.NGINX_IMG}}
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: static-files
+              mountPath: /usr/share/nginx/html
+      volumes:
+          - name: static-files
+            emptyDir: {}
 ---
 
 apiVersion: apps/v1
