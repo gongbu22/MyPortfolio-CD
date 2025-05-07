@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nodejs-deploy
+  name: myportfolio-nodejs
   annotations:
     argocd.argoproj.io/sync-wave: "3"
 spec:
@@ -26,22 +26,22 @@ spec:
           image: {{ .Values.imgs.NODEJS_IMG}}
           ports:
             - containerPort: 5173
-          env:
-            - name: VITE_FASTAPI_URL
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.secret.react.name }}
-                  key: VITE_FASTAPI_URL
-            - name: VITE_CHATBOT_URL
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.secret.react.name }}
-                  key: VITE_CHATBOT_URL
+          # env:
+          #   - name: VITE_FASTAPI_URL
+          #     valueFrom:
+          #       secretKeyRef:
+          #         name: {{ .Values.secret.react.name }}
+          #         key: VITE_FASTAPI_URL
+          #   - name: VITE_CHATBOT_URL
+          #     valueFrom:
+          #       secretKeyRef:
+          #         name: {{ .Values.secret.react.name }}
+          #         key: VITE_CHATBOT_URL
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-deploy
+  name: myportfolio-nginx
   annotations:
     argocd.argoproj.io/sync-wave: "4"
 spec:
