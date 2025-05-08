@@ -24,21 +24,21 @@ spec:
           env:
             - name: TZ
               value: Asia/Seoul
-            - name: MONGO_INITDB_ROOT_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.secret.mongodb.name }}
-                  key: MONGO_USER
-            - name: MONGO_INITDB_ROOT_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.secret.mongodb.name }}
-                  key: MONGO_PASS
+            # - name: MONGO_INITDB_ROOT_USERNAME
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: {{ .Values.secret.mongodb.name }}
+            #       key: MONGO_USER
+            # - name: MONGO_INITDB_ROOT_PASSWORD
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: {{ .Values.secret.mongodb.name }}
+            #       key: MONGO_PASS
           volumeMounts:
             - mountPath: /data/db
               name: mongo-data
-          args:
-            - "--auth"
+          # args:
+          #   - "--auth"
       volumes:
         - name: mongo-data
           persistentVolumeClaim:
