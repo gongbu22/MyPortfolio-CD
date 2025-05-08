@@ -23,7 +23,7 @@ spec:
     - protocol: TCP
       port: 5173
       targetPort: 5173
-  clusterIP: None
+  type: ClusterIP
 ---
 apiVersion: v1
 kind: Service
@@ -38,7 +38,6 @@ spec:
       port: 8000
       targetPort: 8000
       nodePort: 30800
-  clusterIP: None
 ---
 apiVersion: v1
 kind: Service
@@ -53,4 +52,3 @@ spec:
       port: 8001
       targetPort: 8001
       nodePort: 30801
-  clusterIP: None
