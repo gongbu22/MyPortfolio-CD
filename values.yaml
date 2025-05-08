@@ -8,7 +8,7 @@ secret:
 
 mongodb:
   port: 27017
-  nodePort: 30017
+  nodePort: 30017 
 
 imgs:
   NODEJS_IMG: dangdang42/myportfolio-nodejs:latest
