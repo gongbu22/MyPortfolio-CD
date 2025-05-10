@@ -13,14 +13,11 @@ spec:
         app: mongo
     spec:
       containers:
-        - name: app
-          image: "mongo:4.4"
+        - name: mongo
+          image: "mongo:6.0"
           ports:
             - containerPort: 27017
               protocol: TCP
-          envFrom:
-            - secretRef:
-                name: {{ .Values.secret.mongodb.name }}
           env:
             - name: TZ
               value: Asia/Seoul
