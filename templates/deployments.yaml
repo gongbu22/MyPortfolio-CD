@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: myportfolio-front
+  name: myportfolio-nodejs
   annotations:
     argocd.argoproj.io/sync-wave: "3"
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: myportfolio-front
+      app: myportfolio-nodejs
   template:
     metadata:
       labels:
-        app: myportfolio-front
+        app: myportfolio-nodejs
     spec:
       initContainers:
         - name: wait-for-mongodb
@@ -22,26 +22,56 @@ spec:
             - "-c"
             - "until nc -z -v -w30 mongodb-service 27017; do echo 'Waiting for mongodb...'; sleep 5; done;"
       containers:
-        - name: myportfolio-front
-          image: {{ .Values.imgs.FRONT_IMG}}
+        - name: myportfolio-nodejs
+          image: {{ .Values.imgs.NODEJS_IMG}}
+          ports:
+            - containerPort: 5173
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myportfolio-nginx
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: myportfolio-nginx
+  template:
+    metadata:
+      labels:
+        app: myportfolio-nginx
+    spec:
+      initContainers:
+        - name: wait-for-mongodb
+          image: busybox
+          command: 
+            - "sh"
+            - "-c"
+            - "until nc -z -v -w30 mongodb-service 27017; do echo 'Waiting for mongodb...'; sleep 5; done;"
+      containers:
+        - name: myportfolio-nginx
+          image: {{ .Values.imgs.NGINX_IMG}}
           ports:
             - containerPort: 80
 
 # apiVersion: apps/v1
 # kind: Deployment
 # metadata:
-#   name: myportfolio-nodejs
+#   name: myportfolio-front
 #   annotations:
 #     argocd.argoproj.io/sync-wave: "3"
 # spec:
 #   replicas: {{ .Values.replicaCount }}
 #   selector:
 #     matchLabels:
-#       app: myportfolio-nodejs
+#       app: myportfolio-front
 #   template:
 #     metadata:
 #       labels:
-#         app: myportfolio-nodejs
+#         app: myportfolio-front
 #     spec:
 #       initContainers:
 #         - name: wait-for-mongodb
@@ -51,38 +81,8 @@ spec:
 #             - "-c"
 #             - "until nc -z -v -w30 mongodb-service 27017; do echo 'Waiting for mongodb...'; sleep 5; done;"
 #       containers:
-#         - name: myportfolio-nodejs
-#           image: {{ .Values.imgs.NODEJS_IMG}}
-#           ports:
-#             - containerPort: 5173
-
-# ---
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: myportfolio-nginx
-#   annotations:
-#     argocd.argoproj.io/sync-wave: "4"
-# spec:
-#   replicas: {{ .Values.replicaCount }}
-#   selector:
-#     matchLabels:
-#       app: myportfolio-nginx
-#   template:
-#     metadata:
-#       labels:
-#         app: myportfolio-nginx
-#     spec:
-#       initContainers:
-#         - name: wait-for-mongodb
-#           image: busybox
-#           command: 
-#             - "sh"
-#             - "-c"
-#             - "until nc -z -v -w30 mongodb-service 27017; do echo 'Waiting for mongodb...'; sleep 5; done;"
-#       containers:
-#         - name: myportfolio-nginx
-#           image: {{ .Values.imgs.NGINX_IMG}}
+#         - name: myportfolio-front
+#           image: {{ .Values.imgs.FRONT_IMG}}
 #           ports:
 #             - containerPort: 80
         
