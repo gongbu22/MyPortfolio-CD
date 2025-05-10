@@ -2,18 +2,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: myportfolio-nginx
+  name: myportfolio-front
   annotations:
-    argocd.argoproj.io/sync-wave: "4"
+    argocd.argoproj.io/sync-wave: "3"
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: myportfolio-nginx
+      app: myportfolio-front
   template:
     metadata:
       labels:
-        app: myportfolio-nginx
+        app: myportfolio-front
     spec:
       initContainers:
         - name: wait-for-mongodb
@@ -23,8 +23,8 @@ spec:
             - "-c"
             - "until nc -z -v -w30 mongodb-service 27017; do echo 'Waiting for mongodb...'; sleep 5; done;"
       containers:
-        - name: myportfolio-nginx
-          image: {{ .Values.imgs.NGINX_IMG}}
+        - name: myportfolio-front
+          image: {{ .Values.imgs.FRONT_IMG}}
           ports:
             - containerPort: 80
 
