@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   name: myportfolio-ingress
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    # nginx.ingress.kubernetes.io/rewrite-target: /
     cert-manager.io/cluster-issuer: letsencrypt-prod
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     kubernetes.io/ingress.class: public 
@@ -16,7 +16,7 @@ spec:
   - host: yujinfolio.com
     http:
       paths:
-      - path: /app
+      - path: /
         pathType: Prefix
         backend:
           service:
