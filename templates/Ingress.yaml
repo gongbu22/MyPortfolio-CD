@@ -4,7 +4,14 @@ metadata:
   name: myportfolio-ingress
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    kubernetes.io/ingress.class: public 
 spec:
+  tls:
+  - hosts:
+    - yujinfolio.com
+    secretName: yujinfolio-com-tls 
   rules:
   - host: yujinfolio.com
     http:
