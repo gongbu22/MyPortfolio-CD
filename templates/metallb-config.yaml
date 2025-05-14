@@ -10,4 +10,4 @@ spec:
   - name: default
     protocol: layer2
     addresses:
-    - 54.180.192.158/32
+    - 54.180.192.158-54.180.192.158
