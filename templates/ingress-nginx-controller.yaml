@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ingress-nginx-controller
+  namespace: ingress-nginx
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  selector:
+    app: ingress-nginx
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 32519 
+    - protocol: TCP
+      port: 443
+      targetPort: 443
+      nodePort: 31489  
+  type: NodePort 

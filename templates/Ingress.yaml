@@ -2,11 +2,13 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: myportfolio-ingress
+  namespace: ingress-nginx
   annotations:
+    argocd.argoproj.io/sync-wave: "7"
     # nginx.ingress.kubernetes.io/rewrite-target: /
     cert-manager.io/cluster-issuer: letsencrypt-prod
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-    kubernetes.io/ingress.class: public 
+    kubernetes.io/ingress.class: nginx 
 spec:
   tls:
   - hosts:
