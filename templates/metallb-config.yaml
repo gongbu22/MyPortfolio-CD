@@ -1,0 +1,13 @@
+apiVersion: metallb.io/v1beta1
+kind: Config
+metadata:
+  name: config
+  namespace: metallb-system
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  address-pools:
+  - name: default
+    protocol: layer2
+    addresses:
+    - 54.180.192.158/32

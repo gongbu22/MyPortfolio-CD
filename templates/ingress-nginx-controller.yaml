@@ -4,19 +4,18 @@ metadata:
   name: ingress-nginx-controller
   namespace: ingress-nginx
   annotations:
-    argocd.argoproj.io/sync-wave: "0"
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   selector:
-    app: ingress-nginx
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/component: controller
   ports:
     - name: http
       protocol: TCP
       port: 80
       targetPort: 80
-      nodePort: 32519 
     - name: https
       protocol: TCP
       port: 443
       targetPort: 443
-      nodePort: 31489  
-  type: NodePort 
+  type: LoadBalancer 
