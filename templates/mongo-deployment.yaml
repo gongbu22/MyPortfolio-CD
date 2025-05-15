@@ -4,7 +4,7 @@ metadata:
   name: mongo
   namespace: myportfolio
   annotations:
-    argocd.argoproj.io/sync-wave: "3"
+    argocd.argoproj.io/sync-wave: "0"
 spec:
   replicas: 1
   selector:
